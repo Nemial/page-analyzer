@@ -1,0 +1,36 @@
+services:
+  #  page-analyzer:
+  #    restart: on-failure
+  #    container_name: page-analyzer
+  #    build:
+  #      context: ../
+  #      dockerfile: ./deployments/Dockerfile
+  #    ports:
+  #      - "8030:8080"
+  #    networks:
+  #      - n-go
+  #    depends_on:
+  #        - analyzer-db
+
+  analyzer-db:
+    restart: on-failure
+    container_name: analyzer-db
+    image: mysql:8.4
+    volumes:
+      - v-database:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: ${DB_NAME}
+      MYSQL_USER: ${DB_USERNAME}
+      MYSQL_PASSWORD: ${DB_PASSWORD}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+    ports:
+      - "${DB_PORT}:3306"
+    networks:
+      - n-rs
+
+volumes:
+  v-database:
+
+networks:
+  n-rs:
+    driver: bridge

@@ -1,0 +1,58 @@
+{{template "base" .}}
+{{define "title"}}Domain #{{.domain.Id}}{{end}}
+{{define "domains-link"}}active{{end}}
+
+
+{{define "main"}}
+    <div class="container-lg">
+        <h1 class="mt-5 mb-3">Site: {{ .domain.Name }}</h1>
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover text-nowrap">
+                <thead class="thead-dark text-uppercase">
+                <tr>
+                    <th>id</th>
+                    <th>name</th>
+                    <th>created_at</th>
+                    <th>updated_at</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr>
+                    <td>{{ .domain.Id }}</td>
+                    <td>{{ .domain.Name }}</td>
+                    <td>{{ .domain.CreatedAt.Format "2006-01-02 15:04:05"}}</td>
+                    <td>{{ .domain.UpdatedAt.Format "2006-01-02 15:04:05" }}</td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+        <h2 class="mt-5 mb-3">Checks</h2>
+        <form method="POST" action="/domains/{{.domain.Id}}/checks/">
+            <input type="submit" class="btn btn-primary mb-3" value="Run check">
+        </form>
+        <table class="table table-bordered table-hover text-nowrap">
+            <thead class="thead-dark">
+            <tr>
+                <th>Id</th>
+                <th>Status Code</th>
+                <th>h1</th>
+                <th>Keywords</th>
+                <th>Description</th>
+                <th>Created At</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{range .checks}}
+                <tr>
+                    <td>{{ .Id }}</td>
+                    <td>{{ .StatusCode }}</td>
+                    <td>{{ .H1 }}</td>
+                    <td>{{ .Keywords }}</td>
+                    <td>{{ .Description }}</td>
+                    <td>{{ .CreatedAt.Format "2006-01-02 15:04:05" }}</td>
+                </tr>
+            {{end}}
+            </tbody>
+        </table>
+    </div>
+{{end}}
