@@ -9,5 +9,4 @@ CREATE TABLE IF NOT EXISTS domain_checks
     description text,
     updated_at  timestamp,
     created_at  timestamp
-
-)
+);
